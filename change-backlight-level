@@ -1,0 +1,81 @@
+#! /bin/bash
+
+# Increase and decrease backlight
+
+
+
+CMD_GET_BACKLIGHT="light -G"
+CMD_SET_BACKLIGHT="light -S"
+declare -a backlight_levels=(0 1 2 5 10 20 30 40 50 65 80 100)
+backlight_levels_size=${#backlight_levels[@]}
+
+
+
+# Round a float to integer
+# @param $1 The float to round
+function round() {
+printf "%.0f\n" "$1"
+}
+
+
+current_backlight_level=$(round `${CMD_GET_BACKLIGHT}`)
+
+
+# Main function that parses the parameters and call the appropriate function
+# @param $1 The option given to the script
+function main() {
+   local option="$1"
+   case ${option} in
+      -i)
+         increase_backlight_level
+         ;;
+      -d)
+         decrease_backlight_level
+         ;;
+      *)
+         print_usage
+         ;;
+   esac
+}
+
+
+# Print the usage of the script
+function print_usage() {
+   echo "Usage: $0 -i|-d"
+   echo -e "\t-i: Increase backlight"
+   echo -e "\t-d: Decrease backlight"
+   exit 1
+}
+
+
+# Increase backlight level
+function increase_backlight_level() {
+   for i in "${!backlight_levels[@]}"
+   do
+      if (( ${current_backlight_level} < ${backlight_levels[$i]} ))
+      then
+         index_to_set=$((i))
+         `${CMD_SET_BACKLIGHT} ${backlight_levels[${index_to_set}]}`
+         break
+      fi
+   done
+}
+
+
+# Decrease backlight level
+function decrease_backlight_level() {
+   for i in "${!backlight_levels[@]}"
+   do
+       current_index=$(($backlight_levels_size-$i-1))
+       if (( ${current_backlight_level} > ${backlight_levels[${current_index}]} ))
+      then
+         index_to_set=${current_index}
+         `${CMD_SET_BACKLIGHT} ${backlight_levels[${index_to_set}]}`
+         break
+      fi
+   done
+}
+
+
+
+main $1
