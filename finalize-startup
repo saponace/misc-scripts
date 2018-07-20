@@ -10,7 +10,8 @@
     # Disale touchpad while typing on keyboard
         syndaemon -i 0.2 -d &
     # Start pulseaudio
-        pulseaudio --start
+    #FIXME: Do not know why it doesn't work without starting and killing it first
+        pulseaudio --start && pulseaudio --kill && pulseaudio --statrt
     # Notifications daemon
         dunst &
 
