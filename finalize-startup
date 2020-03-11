@@ -10,15 +10,14 @@
     # Disale touchpad while typing on keyboard
         syndaemon -i 0.2 -d &
     # Start pulseaudio
-    #FIXME: Do not know why it doesn't work without starting and killing it first
-        pulseaudio --start && pulseaudio --kill && pulseaudio --statrt
+        (sleep 5 ; pulseaudio --start) &
     # Notifications daemon
-        dunst &
+        (sleep 5 ; dunst) &
 
 #----- Tray icons
     # Network manager with tray icon
         nm-applet 2>&1 /dev/null &
-    # Pulse audi tray icon
+    # Pulse audio tray icon
         pasystray &
 
 #----- Settings
@@ -26,3 +25,6 @@
         setxkbmap -option caps:escape
     # Disable screen blanking when inactive
         xset -dpms & xset s noblank & xset s off
+
+# Initiate VPN connection
+    (sleep 20 ; pypia -r all -f) &
