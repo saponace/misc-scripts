@@ -10,9 +10,9 @@
     # Disale touchpad while typing on keyboard
         syndaemon -i 0.2 -d &
     # Start pulseaudio
-        (sleep 5 ; pulseaudio --start) &
+        (sleep 10 ; pulseaudio --start) &
     # Notifications daemon
-        (sleep 5 ; dunst) &
+        (sleep 15 ; dunst) &
 
 #----- Tray icons
     # Network manager with tray icon
