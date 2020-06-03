@@ -13,6 +13,8 @@
         (sleep 10 ; pulseaudio --start) &
     # Notifications daemon
         (sleep 15 ; dunst) &
+    # File synchronization daemon
+        (sleep 20 ; syncthingtray) &
 
 #----- Tray icons
     # Network manager with tray icon
