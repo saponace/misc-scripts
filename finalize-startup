@@ -29,4 +29,4 @@
         xset -dpms & xset s noblank & xset s off
 
 # Initiate VPN connection
-    (sleep 20 ; pypia -r all -f) &
+    (sleep 20 ; /opt/piavpn/bin/pia-client) &
